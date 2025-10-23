@@ -1,0 +1,64 @@
+---
+title: "Data Management with GitHub"
+format: html
+---
+
+# Introduction
+
+Congrats! You were able to clone this repository to your local machine. 
+
+You don't have access to edit this repository on GitHub. However, you can always **fork** it — this will create your own copy of the repository, allowing you to make changes independently. Alternatively, you can easily create a new repository or connect an existing one in GitHub Desktop.
+
+Any access or creation of a repository can be done through File → **New Repository / Add Local Repository / Close Repository**.
+
+# Exploring the Data
+
+Today we are working with replication data for the paper "[Carrots and sticks: How voter loyalty and electoral opportunities shape parties’ policy priorities in Europe](https://ejpr.onlinelibrary.wiley.com/doi/10.1111/1475-6765.12744)".
+
+- **CSES_MARPOR.RDS:** Data from *CSES* ([IMD](https://cses.org/data-download/cses-integrated-module-dataset-imd)) on parties' voter loyalty and electoral opportunities based on vote choice and party likability scores, merged with data from *MARPOR* ([version 2024a](https://manifesto-project.wzb.eu/datasets)) on parties' issue focus.
+
+First, load the `tidyverse` library and the data. And load the `patchwork` library.
+
+```{r}
+library(tidyverse)
+library(patchwork)
+
+cses = readRDS("data/CSES_MARPOR.rds")
+```
+
+Now, let's plot the **Figure 2** from the paper. Add the median.
+
+```{r}
+gr_histogram = cses %>%
+  ggplot(aes(x = loyalty)) +
+    geom_histogram(aes(y = ..density..), fill = "lightgray", color = "gray") +
+    geom_density() +
+    xlim(0, 1) +
+    theme_minimal() +
+    labs(x = "Loyalty",
+         y = "Density") +
+   geom_vline(xintercept = median(cses$loyalty), size = 1)
+
+gr_histogram
+```
+
+And now let's compare it with boxplots!
+
+```{r}
+gr_boxplot = cses %>%
+  ggplot(aes(x = "", y = loyalty)) +
+    geom_boxplot(fill = "lightgray") +
+    coord_flip() +
+    theme_minimal() +
+    labs(x = "", y = "Loyalty") +
+    ylim(0,1)
+
+gr_boxplot
+```
+
+Finally, compare them together. We can use `patchwork` for this.
+
+```{r}
+gr_histogram / gr_boxplot
+```
+
