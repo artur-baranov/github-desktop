@@ -30,9 +30,9 @@ Now, let's plot the **Figure 2** from the paper. Add the median.
 
 ```{r}
 gr_histogram = cses %>%
-  ggplot(aes(x = loyalty)) +
-    geom_histogram(aes(y = ..density..), fill = "lightgray", color = "gray") +
-    geom_density() +
+  ggplot() +
+    geom_histogram(aes(x = loyalty, y = ..density..), fill = "lightgray", color = "gray") +
+    geom_density(aes(x = loyalty)) +
     xlim(0, 1) +
     theme_minimal() +
     labs(x = "Loyalty",
