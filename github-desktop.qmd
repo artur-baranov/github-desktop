@@ -7,6 +7,8 @@ format: html
 
 Congrats! You were able to clone this repository to your local machine. 
 
+I have changed something.
+
 You don't have access to edit this repository on GitHub. However, you can always **fork** it — this will create your own copy of the repository, allowing you to make changes independently. Alternatively, you can easily create a new repository or connect an existing one in GitHub Desktop.
 
 Any access or creation of a repository can be done through File → **New Repository / Add Local Repository / Close Repository**.
